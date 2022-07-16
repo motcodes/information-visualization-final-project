@@ -1,14 +1,19 @@
-import { json } from 'd3'
-import { feature, mesh } from 'topojson'
+import { json, csv } from 'd3'
 
-const countriesUrl = 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json'
+export const getTopoCountries = async () => {
+  let dataMap = new Map()
+  let features
 
-export const getTopoData = async () => {
-  const topology = await json(countriesUrl)
-  const { countries, land } = topology.objects
-  const data = {
-    land: feature(topology, land),
-    interiors: mesh(topology, countries, (a, b) => a !== b)
-  }
-  return data
+  const res = await Promise.all([
+    json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
+    csv(
+      'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv',
+      (d) => {
+        dataMap.set(d.code, +d.pop)
+      }
+    )
+  ])
+
+  features = await res[0].features
+  return { dataMap, features }
 }

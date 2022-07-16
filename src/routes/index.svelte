@@ -1,5 +1,5 @@
 <script>
-  import { getTopoData } from '$lib/getTopoData'
+  import { getTopoCountries } from '$lib/getTopoData'
   import Marks from '../marks.svelte'
 
   const width = 960
@@ -9,13 +9,13 @@
 <h1>Welcome to SvelteKit</h1>
 
 <main>
-  {#await getTopoData()}
+  {#await getTopoCountries()}
     <p>loading map</p>
   {:then data}
     <svg {width} {height}>
       <Marks {data} />
     </svg>
-  {:catch error}
+  {:catch}
     <p>error while loading map</p>
   {/await}
 </main>

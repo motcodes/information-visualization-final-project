@@ -1,10 +1,9 @@
 <script>
   export let data
-  console.log(data)
-
   import { geoNaturalEarth1, geoPath, geoGraticule } from 'd3'
+  import Land from './land.svelte'
 
-  const { land, interiors } = data
+  const { dataMap, features } = data
 
   const projection = geoNaturalEarth1()
   const path = geoPath(projection)
@@ -14,16 +13,12 @@
 <g class="marks">
   <path class="sphere" d={path({ type: 'Sphere' })} />
   <path class="graticules" d={path(graticule())} />
-  {#each land.features as feature}
-    <path class="land" d={path(feature)} />
+  {#each features as feature}
+    <Land path={path(feature)} />
   {/each}
-  <path class="interiors" d={path(interiors)} />
 </g>
 
 <style>
-  .marks .land {
-    fill: #010101;
-  }
   .marks .sphere {
     fill: #fcfcfc;
   }
