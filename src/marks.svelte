@@ -1,14 +1,30 @@
 <script>
   export let data
+  // export let svg
 
-  import { geoNaturalEarth1, geoPath, geoGraticule } from 'd3'
+  import { geoEquirectangular, geoPath, geoGraticule, zoom, select } from 'd3'
+  import { onMount } from 'svelte'
   import Land from './land.svelte'
 
   const { dataMap, features } = data
 
-  const projection = geoNaturalEarth1()
+  const projection = geoEquirectangular()
   const path = geoPath(projection)
   const graticule = geoGraticule()
+
+  let svg
+  let g
+  onMount(() => {
+    svg = select('svg#map')
+    g = select('g.marks')
+    const zoomFn = zoom()
+      .scaleExtent([1, 10])
+      .on('zoom', (event, d) => {
+        g.selectAll('path').attr('transform', event.transform)
+      })
+
+    svg.call(zoomFn)
+  })
 </script>
 
 <g class="marks">
@@ -23,12 +39,9 @@
   .marks .sphere {
     fill: #fcfcfc;
   }
-  .marks .interiors {
-    fill: none;
-    stroke: #feb659;
-  }
+
   .marks .graticules {
     fill: none;
-    stroke: #feb659;
+    stroke: #fde6ff;
   }
 </style>

@@ -2,9 +2,6 @@
   import { getTopoCountries } from '$lib/getTopoData'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
-
-  const width = 960
-  const height = 960
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -13,7 +10,7 @@
   {#await getTopoCountries()}
     <p>loading map</p>
   {:then data}
-    <svg {width} {height}>
+    <svg width="100vw" height="80vh" id="map">
       <Marks {data} />
     </svg>
     <Tooltip />
@@ -24,7 +21,7 @@
 
 <style global>
   body {
-    margin: 0 1rem;
+    margin: 0 0rem;
     overflow: hidden;
     font-family: 'Helvetica', sans-serif;
   }
