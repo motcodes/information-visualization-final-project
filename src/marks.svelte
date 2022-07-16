@@ -22,17 +22,17 @@
 
 <style>
   .marks .land {
-    fill: #137b80;
+    fill: #010101;
   }
   .marks .sphere {
-    fill: #ececec;
+    fill: #fcfcfc;
   }
   .marks .interiors {
     fill: none;
-    stroke: #43a4a8;
+    stroke: #feb659;
   }
   .marks .graticules {
     fill: none;
-    stroke: #dadada;
+    stroke: #feb659;
   }
 </style>
