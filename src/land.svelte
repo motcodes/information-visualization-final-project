@@ -1,30 +1,37 @@
 <script>
   export let path
+  export let feature
 
-  let active = false
+  import { activeCountry } from '$lib/store'
 
-  function handleMouseEnter(event) {
-    active = true
+  const handleMouseEnter = (event) => {
+    activeCountry.set(feature)
   }
-  function handleMouseLeave(event) {
-    active = false
+
+  const handleMouseMove = (event) => {
+    activeCountry.update((feature) => ({ ...feature, x: event.x, y: event.y }))
+  }
+
+  const handleMouseLeave = (event) => {
+    activeCountry.set({})
   }
 </script>
 
 <path
-  class={`land ${active && 'active'}`}
+  class="land"
   d={path}
   on:mouseenter={handleMouseEnter}
   on:mouseleave={handleMouseLeave}
+  on:mousemove={handleMouseMove}
 />
 
 <style>
   .land {
-    fill: #010101;
-    stroke: red;
+    fill: #f3daf5;
+    stroke: #745676;
     cursor: pointer;
   }
-  .active {
-    fill: blue;
+  .land:hover {
+    fill: #da9cde;
   }
 </style>

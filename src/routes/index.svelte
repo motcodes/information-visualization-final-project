@@ -1,6 +1,7 @@
 <script>
   import { getTopoCountries } from '$lib/getTopoData'
   import Marks from '../marks.svelte'
+  import Tooltip from '../tooltip.svelte'
 
   const width = 960
   const height = 960
@@ -15,6 +16,7 @@
     <svg {width} {height}>
       <Marks {data} />
     </svg>
+    <Tooltip />
   {:catch}
     <p>error while loading map</p>
   {/await}
@@ -25,6 +27,9 @@
     margin: 0 1rem;
     overflow: hidden;
     font-family: 'Helvetica', sans-serif;
+  }
+  main {
+    position: relative;
   }
   pre {
     font-size: 7em;
