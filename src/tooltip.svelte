@@ -1,19 +1,25 @@
+<!-- script -->
 <script>
   import { activeCountry } from '$lib/store'
 
+  // activeCountry.subscribe listens for changes of the activeCountry store
+  // if the value changes it updates the local country value
+  // which will change the tooltip text as well as the current tooltips x and y position
   let country
-
   const unsubscribe = activeCountry.subscribe((value) => {
     country = value
   })
 </script>
 
+<!-- HTML Markup -->
+<!-- checks if country object is empty or not -->
 {#if Object.keys(country).length}
   <div class="tooltip" style="top: {country.y}px; left: {country.x + 8}px;">
     <p>{country.properties.name}</p>
   </div>
 {/if}
 
+<!-- scoped Styles -->
 <style>
   .tooltip {
     position: absolute;
