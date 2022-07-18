@@ -5,7 +5,8 @@
   import Land from './land.svelte'
 
   export let data
-  const { dataMap, features } = data
+  const { developerPerCountry, features, stackoverflow } = data
+  console.log(stackoverflow)
 
   // geoEquirectangular is the type of map
   // path transforms arc values to svg values
@@ -36,6 +37,17 @@
     // this function only runs inside the svg element
     svg.call(zoomFn)
   })
+
+  const countOccur = (dataset, key, searchValue) =>
+    dataset.reduce((n, value) => {
+      console.log(value[key])
+      return n + (value[key] == searchValue)
+    }, 0)
+
+  function handleOnLand(event) {
+    const countryName = event.target.dataset.value
+    console.log(developerPerCountry.get(countryName))
+  }
 </script>
 
 <!-- HTML Markup -->
@@ -43,7 +55,7 @@
   <path class="sphere" d={path({ type: 'Sphere' })} />
   <path class="graticules" d={path(graticule())} />
   {#each features as feature}
-    <Land path={path(feature)} {feature} />
+    <Land path={path(feature)} {feature} {handleOnLand} />
   {/each}
 </g>
 

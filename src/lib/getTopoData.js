@@ -1,21 +1,50 @@
 import { json, csv } from 'd3'
 
-export const getTopoCountries = async () => {
-  let dataMap = new Map()
-  let features
+// the stackoverflow and world.geojson data don't always have the same country names
+// this function corrects the stackoverflow country name to the geojson names.
+const changeCountryNames = (item) => {
+  switch (item.Country) {
+    case 'United Kingdom of Great Britain and Northern Ireland':
+      item.Country = 'England'
+      break
+    case 'United States of America':
+      item.Country = 'USA'
+      break
+    case 'Iran, Islamic Republic of...':
+      item.Country = 'Iran'
+      break
+    case 'Russian Federation':
+      item.Country = 'Russia'
+      break
+    default:
+      break
+  }
+  return item
+}
 
+export const getTopoCountries = async () => {
   // fetches world geoJson data and world population
-  // dataMap gets the country code as the key and the population as value
   const res = await Promise.all([
     json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
-    csv(
-      'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv',
-      (d) => {
-        dataMap.set(d.code, +d.pop)
-      }
-    )
+    csv('/Stackoverflow2021.csv')
   ])
 
-  features = await res[0].features
-  return { dataMap, features }
+  let developerPerCountry = new Map()
+
+  let features = await res[0].features
+  let stackoverflow = await res[1].map((item) => {
+    const newItem = changeCountryNames(item)
+
+    // looks if country is already in map if not there are no developers yet (0)
+    // adds one and updates the map value.
+    let developerCount = developerPerCountry.get(newItem.Country) || 0
+    developerCount += 1
+    developerPerCountry.set(newItem.Country, developerCount)
+    return {
+      ...newItem,
+      Country: newItem.Country
+    }
+  })
+
+  return { developerPerCountry, features, stackoverflow }
 }

@@ -4,6 +4,7 @@
 
   export let path
   export let feature
+  export let handleOnLand
 
   // handleMouseEnter sets activeCountry to the current hovered feature (country) for the tooltip
   const handleMouseEnter = (event) => {
@@ -25,6 +26,8 @@
 <path
   class="land"
   d={path}
+  data-value={feature.properties.name}
+  on:click={handleOnLand}
   on:mouseenter={handleMouseEnter}
   on:mouseleave={handleMouseLeave}
   on:mousemove={handleMouseMove}
