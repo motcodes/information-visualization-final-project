@@ -3,6 +3,7 @@
   import { getTopoCountries } from '$lib/getTopoData'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
+  import GraphModal from '../graphModal.svelte'
 </script>
 
 <!-- HTML Markup -->
@@ -13,10 +14,11 @@
   {#await getTopoCountries()}
     <p>loading map</p>
   {:then data}
-    <svg width="100vw" height="80vh" id="map">
+    <svg width="100vw" height="400px" id="map">
       <Marks {data} />
     </svg>
     <Tooltip />
+    <GraphModal {data} />
   {:catch}
     <p>error while loading map</p>
   {/await}
@@ -26,7 +28,7 @@
 <style global>
   body {
     margin: 0 0rem;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-family: 'Helvetica', sans-serif;
   }
   main {

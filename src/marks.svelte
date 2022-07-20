@@ -3,10 +3,11 @@
   import { geoEquirectangular, geoPath, geoGraticule, zoom, select } from 'd3'
   import { onMount } from 'svelte'
   import Land from './land.svelte'
+  import { activeCountry } from '$lib/store'
 
   export let data
   const { developerPerCountry, features, stackoverflow } = data
-  console.log(stackoverflow)
+  // console.log(stackoverflow)
 
   // geoEquirectangular is the type of map
   // path transforms arc values to svg values
@@ -18,7 +19,6 @@
   // init svg and svg-group elements
   let svg
   let g
-
   // onMount runs after the markup is rendered
   // once there is the svg and g element we can use them in the d3 context
   onMount(() => {
@@ -46,7 +46,7 @@
 
   function handleOnLand(event) {
     const countryName = event.target.dataset.value
-    console.log(developerPerCountry.get(countryName))
+    console.log('devs per country: ', developerPerCountry.get(countryName) || 0)
   }
 </script>
 

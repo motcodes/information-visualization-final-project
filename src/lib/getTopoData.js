@@ -25,11 +25,15 @@ const changeCountryNames = (item) => {
 export const getTopoCountries = async () => {
   // fetches world geoJson data and world population
   const res = await Promise.all([
-    json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
+    json(
+      'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',
+      (item) => ({ ...item, isActive: false })
+    ),
     csv('/Stackoverflow2021.csv')
   ])
 
   let developerPerCountry = new Map()
+  let countryDevelopers = new Map()
 
   let features = await res[0].features
   let stackoverflow = await res[1].map((item) => {
@@ -40,11 +44,15 @@ export const getTopoCountries = async () => {
     let developerCount = developerPerCountry.get(newItem.Country) || 0
     developerCount += 1
     developerPerCountry.set(newItem.Country, developerCount)
+
+    const countryData = countryDevelopers.get(newItem.Country) || []
+    countryDevelopers.set(newItem.Country, [...countryData, newItem])
+
     return {
       ...newItem,
       Country: newItem.Country
     }
   })
 
-  return { developerPerCountry, features, stackoverflow }
+  return { countryDevelopers, developerPerCountry, features, stackoverflow }
 }

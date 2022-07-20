@@ -13,7 +13,7 @@
 
 <!-- HTML Markup -->
 <!-- checks if country object is empty or not -->
-{#if Object.keys(country).length}
+{#if Object.keys(country).length && country.properties}
   <div class="tooltip" style="top: {country.y}px; left: {country.x + 8}px;">
     <p>{country.properties.name}</p>
   </div>
