@@ -7,7 +7,6 @@
 </script>
 
 <!-- HTML Markup -->
-<h1>Welcome to SvelteKit</h1>
 <main>
   <!-- await then block is a inline solution to render a loading state -->
   <!-- while awaiting a promise, which gets called in the :then block once fullfilled -->

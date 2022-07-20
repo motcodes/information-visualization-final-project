@@ -35,6 +35,9 @@ export const getTopoCountries = async () => {
   let developerPerCountry = new Map()
   let countryDevelopers = new Map()
 
+  // **************
+  // add global data
+  // **************
   let features = await res[0].features
   let stackoverflow = await res[1].map((item) => {
     const newItem = changeCountryNames(item)
