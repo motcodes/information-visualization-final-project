@@ -1,14 +1,5 @@
-<!-- script -->
-<script>
-  import { geoEquirectangular, geoPath, geoGraticule, zoom, select } from 'd3'
-  import { onMount } from 'svelte'
-  import Land from './land.svelte'
-  import { activeCountry } from '$lib/store'
-
-  export let data
-  const { developerPerCountry, features, stackoverflow } = data
-  // console.log(stackoverflow)
-
+<!-- context script - only runs once on inital load -->
+<script context="module">
   // geoEquirectangular is the type of map
   // path transforms arc values to svg values
   // graticule are the latitude and longitude lines (depending on the projection)
@@ -19,6 +10,18 @@
   // init svg and svg-group elements
   let svg
   let g
+</script>
+
+<!-- script -->
+<script>
+  import { geoEquirectangular, geoPath, geoGraticule, zoom, select } from 'd3'
+  import { onMount } from 'svelte'
+  import Land from './land.svelte'
+  import { activeCountry } from '$lib/store'
+
+  export let data
+  const { developerPerCountry, features, stackoverflow } = data
+
   // onMount runs after the markup is rendered
   // once there is the svg and g element we can use them in the d3 context
   onMount(() => {
@@ -37,12 +40,6 @@
     // this function only runs inside the svg element
     svg.call(zoomFn)
   })
-
-  const countOccur = (dataset, key, searchValue) =>
-    dataset.reduce((n, value) => {
-      console.log(value[key])
-      return n + (value[key] == searchValue)
-    }, 0)
 
   function handleOnLand(event) {
     const countryName = event.target.dataset.value

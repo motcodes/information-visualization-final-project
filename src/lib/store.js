@@ -7,6 +7,10 @@ function createActiveCountry() {
   const initalState = { isActive: false, x: 0, y: 0 }
   const { subscribe, set, update } = writable(initalState)
 
+  // setFeature only updates the feature part of the store
+  // setPosition only updates x and y part of the store
+  // toggleActive toggles the isActive flag
+  // reset sets the store back to the inital value
   return {
     set,
     subscribe,

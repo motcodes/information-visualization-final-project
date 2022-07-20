@@ -7,6 +7,7 @@
   $: scaleY
 </script>
 
+<!-- iterates through the map to create a corresponding rectangle -->
 {#each [...data] as [key, value]}
   <rect
     x={scaleX(key) + 8}

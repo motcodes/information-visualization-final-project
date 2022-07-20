@@ -44,7 +44,6 @@ export const getTopoCountries = async () => {
     let developerCount = developerPerCountry.get(newItem.Country) || 0
     developerCount += 1
     developerPerCountry.set(newItem.Country, developerCount)
-
     const countryData = countryDevelopers.get(newItem.Country) || []
     countryDevelopers.set(newItem.Country, [...countryData, newItem])
 
