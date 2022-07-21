@@ -10,8 +10,8 @@ export const ages = [
   '65 years or older',
   'Prefer not to say'
 ]
-export const margin = { top: 10, right: 0, bottom: 20, left: 50 }
-export const width = 600 - margin.left - margin.right
+export const margin = { top: 10, right: 20, bottom: 30, left: 150 }
+export const width = 800 - margin.left - margin.right
 export const height = 500 - margin.top - margin.bottom
 
 export const countOccur = (dataset, key, searchValue) =>

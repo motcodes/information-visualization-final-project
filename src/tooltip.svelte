@@ -26,7 +26,7 @@
     border: 1px solid #745676;
     background: #f3daf5;
     border-radius: 4px;
-    transform: translateY(-245%);
+    transform: translateY(50%);
   }
   .tooltip p {
     margin: 0;

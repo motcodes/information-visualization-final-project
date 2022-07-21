@@ -1,9 +1,10 @@
 <!-- script -->
 <script>
   import { getTopoCountries } from '$lib/getTopoData'
+  import AgeBarchart from '../charts/ageBarchart.svelte'
+  import AgeRowchart from '../charts/ageRowchart.svelte'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
-  import GraphModal from '../graphModal.svelte'
 </script>
 
 <!-- HTML Markup -->
@@ -17,7 +18,8 @@
       <Marks {data} />
     </svg>
     <Tooltip />
-    <GraphModal {data} />
+    <!-- <AgeBarchart {data} /> -->
+    <AgeRowchart {data} />
   {:catch}
     <p>error while loading map</p>
   {/await}
@@ -35,5 +37,9 @@
   }
   pre {
     font-size: 7em;
+  }
+
+  .tick text {
+    font-size: 14.4px;
   }
 </style>
