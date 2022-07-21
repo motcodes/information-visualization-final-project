@@ -6,36 +6,40 @@
 
   export let data
 
+  /**
+   * turn into scatterplot
+   */
+
   const { countryDevelopers } = data
 
   let axisBottomRef, axisLeftRef
   let scaleX, scaleY
   let xTicks, yTicks
   let country = []
-  const edLevelCount = new Map()
+  const compensationCount = new Map()
 
   // surbscribe runs each time the activeCountry value updates
   // so each time another country gets selected.
-  // inside the loop the edLevelCount for the barchart is set,
+  // inside the loop the compensationCount for the barchart is set,
   // which updates each time another country is clicked on
   const unsubscribe = activeCountry.subscribe((value) => {
     if (value.properties && value.isActive) {
       country = countryDevelopers.get(value.properties.name)
-      edLevelCount.clear()
+      compensationCount.clear()
       country.forEach((item) => {
-        let ageValue = edLevelCount.get(item.EdLevel) || 0
+        let ageValue = compensationCount.get(item.CompTotal) || 0
         ageValue += 1
-        edLevelCount.set(item.EdLevel, ageValue)
+        compensationCount.set(item.CompTotal, ageValue)
       })
-      console.log(country)
+      console.log(compensationCount)
     }
   })
 
   // "$: ..." is a reactive statement which runs these lines each time a value inside them changes
-  // so if edLevelCount gets a new value, the scale has to recalculate and then upate the axis and bars
+  // so if compensationCount gets a new value, the scale has to recalculate and then upate the axis and bars
   $: {
     scaleX = scaleLinear()
-      .domain([Math.max(...edLevelCount.values()), 0])
+      .domain([Math.max(...compensationCount.values()), 0])
       .range([width, 0])
     scaleY = scaleBand().domain(edLevels).range([0, height])
 
@@ -44,11 +48,7 @@
 
     select(axisBottomRef).call(axisBottom(scaleX).tickValues(xTicks).tickFormat(format('d')))
     select(axisLeftRef)
-      .call(
-        axisLeft(scaleY)
-          .tickValues(yTicks)
-          .tickFormat((tick) => `${tick.substring(0, 24)} ${tick.length > 24 ? '...' : ''}`)
-      )
+      .call(axisLeft(scaleY))
       .selectAll('g.tick')
       .append('title')
       .html((d) => d)
@@ -62,7 +62,7 @@
     <!-- left axis -->
     <g bind:this={axisLeftRef} class="leftAxis" scale={scaleY} />
     <!-- bars -->
-    {#each [...edLevelCount] as [key, value]}
+    {#each [...compensationCount] as [key, value]}
       <rect
         x={1}
         y={scaleY(key) + 8 || 0}
