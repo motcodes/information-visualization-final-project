@@ -1,8 +1,8 @@
 <!-- script -->
 <script>
   import { getTopoCountries } from '$lib/getTopoData'
-  import AgeBarchart from '../charts/ageBarchart.svelte'
   import AgeRowchart from '../charts/ageRowchart.svelte'
+  import EdLevelRowchart from '../charts/edLevelRowchart.svelte'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
 </script>
@@ -18,8 +18,9 @@
       <Marks {data} />
     </svg>
     <Tooltip />
-    <!-- <AgeBarchart {data} /> -->
+    <!-- Bar Charts -->
     <AgeRowchart {data} />
+    <EdLevelRowchart {data} />
   {:catch}
     <p>error while loading map</p>
   {/await}

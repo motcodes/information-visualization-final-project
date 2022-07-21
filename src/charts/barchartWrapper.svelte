@@ -16,6 +16,6 @@
 
 <style>
   .modal {
-    margin-left: 100px;
+    margin-left: 16px;
   }
 </style>
