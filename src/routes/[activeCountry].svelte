@@ -22,7 +22,6 @@
   {#await getTopoCountries()}
     <p>loading map</p>
   {:then data}
-    <!-- Bar Charts -->
     <Charts {data} {countryName} />
   {:catch}
     <p>error while loading map</p>

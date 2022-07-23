@@ -1,15 +1,5 @@
 <!-- context script - only runs once on inital load -->
 <script context="module">
-  // geoEquirectangular is the type of map
-  // path transforms arc values to svg values
-  // graticule are the latitude and longitude lines (depending on the projection)
-  const projection = geoEquirectangular()
-  const path = geoPath(projection)
-  const graticule = geoGraticule()
-
-  // init svg and svg-group elements
-  let svg
-  let g
 </script>
 
 <!-- script -->
@@ -20,13 +10,32 @@
   import { activeCountry } from '$lib/store'
 
   export let data
-  const { developerPerCountry, features, stackoverflow } = data
+  const { developerPerCountry, features, stackoverflow, bigData } = data
+
+  // geoEquirectangular is the type of map
+  // path transforms arc values to svg values
+  // graticule are the latitude and longitude lines (depending on the projection)
+  let projection = null
+  let path = null
+  let graticule = null
+
+  // init svg and svg-group elements
+  let svg
+  let g
 
   // onMount runs after the markup is rendered
   // once there is the svg and g element we can use them in the d3 context
   onMount(() => {
+    console.log(window.innerHeight)
+
     svg = select('svg#map')
     g = select('g.marks')
+
+    projection = geoEquirectangular()
+      .scale(1)
+      .fitSize([window.innerWidth, window.innerHeight], bigData)
+    path = geoPath(projection)
+    graticule = geoGraticule()
 
     // zoom is a d3 function and listens for a panning or zooming event
     // it's possible to zoom in 10 times the original size.
@@ -49,11 +58,13 @@
 
 <!-- HTML Markup -->
 <g class="marks">
-  <path class="sphere" d={path({ type: 'Sphere' })} />
-  <path class="graticules" d={path(graticule())} />
-  {#each features as feature}
-    <Land path={path(feature)} {feature} {handleOnLand} />
-  {/each}
+  {#if path !== null}
+    <path class="sphere" d={path({ type: 'Sphere' })} />
+    <path class="graticules" d={path(graticule())} />
+    {#each features as feature}
+      <Land path={path(feature)} {feature} {handleOnLand} />
+    {/each}
+  {/if}
 </g>
 
 <!-- scoped Styles -->

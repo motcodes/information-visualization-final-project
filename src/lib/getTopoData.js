@@ -56,5 +56,5 @@ export const getTopoCountries = async () => {
     }
   })
 
-  return { countryDevelopers, developerPerCountry, features, stackoverflow }
+  return { countryDevelopers, developerPerCountry, features, stackoverflow, bigData: res[0] }
 }
