@@ -1,41 +1,20 @@
 <script>
   import { axisBottom, axisLeft, format, scaleBand, scaleLinear, select } from 'd3'
-  import { activeCountry } from '$lib/store'
   import { edLevels, width, height } from '$lib/constants'
-  import BarchartWrapper from './barchartWrapper.svelte'
+  import RowchartWrapper from './rowchartWrapper.svelte'
 
-  export let data
-
-  const { countryDevelopers } = data
+  export let edLevelData
+  export let country
 
   let axisBottomRef, axisLeftRef
   let scaleX, scaleY
   let xTicks, yTicks
-  let country = []
-  const edLevelCount = new Map()
-
-  // surbscribe runs each time the activeCountry value updates
-  // so each time another country gets selected.
-  // inside the loop the edLevelCount for the barchart is set,
-  // which updates each time another country is clicked on
-  const unsubscribe = activeCountry.subscribe((value) => {
-    if (value.properties && value.isActive) {
-      country = countryDevelopers.get(value.properties.name)
-      edLevelCount.clear()
-      country.forEach((item) => {
-        let ageValue = edLevelCount.get(item.EdLevel) || 0
-        ageValue += 1
-        edLevelCount.set(item.EdLevel, ageValue)
-      })
-      console.log(edLevelCount)
-    }
-  })
 
   // "$: ..." is a reactive statement which runs these lines each time a value inside them changes
-  // so if edLevelCount gets a new value, the scale has to recalculate and then upate the axis and bars
+  // so if edLevelData gets a new value, the scale has to recalculate and then upate the axis and bars
   $: {
     scaleX = scaleLinear()
-      .domain([Math.max(...edLevelCount.values()), 0])
+      .domain([Math.max(...edLevelData.values()), 0])
       .range([width, 0])
     scaleY = scaleBand().domain(edLevels).range([0, height])
 
@@ -56,13 +35,13 @@
 </script>
 
 {#key country}
-  <BarchartWrapper>
+  <RowchartWrapper>
     <!-- bottom axis -->
     <g bind:this={axisBottomRef} class="bottomAxis" transform={`translate(0, ${height})`} />
     <!-- left axis -->
     <g bind:this={axisLeftRef} class="leftAxis" scale={scaleY} />
     <!-- bars -->
-    {#each [...edLevelCount] as [key, value]}
+    {#each [...edLevelData] as [key, value]}
       <rect
         x={1}
         y={scaleY(key) + 8 || 0}
@@ -71,7 +50,7 @@
         fill="#f3daf5"
       />
     {/each}
-  </BarchartWrapper>
+  </RowchartWrapper>
 {/key}
 
 <style>

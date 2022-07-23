@@ -1,14 +1,13 @@
 <!-- script -->
 <script>
   import { activeCountry } from '$lib/store'
+  import { goto } from '$app/navigation'
 
   export let path
   export let feature
   export let handleOnLand
 
-  let element
-
-  let country
+  let country, element
   let isSameCountry = false
   const unsubscribe = activeCountry.subscribe((value) => {
     country = value
@@ -40,6 +39,7 @@
   function handleClick(event) {
     activeCountry.setFeature(feature)
     activeCountry.toggleActive()
+    goto(`/${feature.properties.name}`)
     // element.classList.toggle('active', isSameCountry)
     // console.log(element.classList)
     handleOnLand(event)

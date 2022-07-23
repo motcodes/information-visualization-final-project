@@ -20,7 +20,7 @@
       <Marks {data} />
     </svg>
     <Tooltip />
-    <!-- Bar Charts -->
+
     <SalaryEdLevelRowchart {data} />
     <SalaryAgeScatterplot {data} />
     <AgeRowchart {data} />
