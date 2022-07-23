@@ -1,5 +1,5 @@
 <script>
-  import { axisBottom, axisLeft, format, scaleBand, scaleLinear, select } from 'd3'
+  import { axisBottom, axisLeft, format, max, mean, scaleBand, scaleLinear, select } from 'd3'
   import { activeCountry } from '$lib/store'
   import { edLevels, width, height } from '$lib/constants'
   import BarchartWrapper from './barchartWrapper.svelte'
@@ -12,31 +12,33 @@
   let scaleX, scaleY
   let xTicks, yTicks
   let country = []
-  const edLevelCount = new Map()
+  let chartData = new Map()
+  let maxSalary = 0
 
   // surbscribe runs each time the activeCountry value updates
   // so each time another country gets selected.
-  // inside the loop the edLevelCount for the barchart is set,
+  // inside the loop the compensationCount for the barchart is set,
   // which updates each time another country is clicked on
   const unsubscribe = activeCountry.subscribe((value) => {
     if (value.properties && value.isActive) {
       country = countryDevelopers.get(value.properties.name)
-      edLevelCount.clear()
+      chartData.clear()
       country.forEach((item) => {
-        let ageValue = edLevelCount.get(item.EdLevel) || 0
-        ageValue += 1
-        edLevelCount.set(item.EdLevel, ageValue)
+        let salary = Number.isNaN(parseInt(item.CompTotal)) ? 0 : parseInt(item.CompTotal)
+        if (salary > 1) {
+          const counter = chartData.get(item.EdLevel) || []
+          chartData.set(item.EdLevel, [...counter, salary])
+        }
       })
-      console.log(edLevelCount)
+      console.log(chartData)
+      maxSalary = Math.max(...[...chartData.values()].map((item) => mean(item)))
     }
   })
 
   // "$: ..." is a reactive statement which runs these lines each time a value inside them changes
-  // so if edLevelCount gets a new value, the scale has to recalculate and then upate the axis and bars
+  // so if compensationCount gets a new value, the scale has to recalculate and then upate the axis and bars
   $: {
-    scaleX = scaleLinear()
-      .domain([Math.max(...edLevelCount.values()), 0])
-      .range([width, 0])
+    scaleX = scaleLinear().domain([maxSalary, 0]).range([width, 0])
     scaleY = scaleBand().domain(edLevels).range([0, height])
 
     xTicks = scaleX.ticks().filter((tick) => Number.isInteger(tick))
@@ -62,11 +64,11 @@
     <!-- left axis -->
     <g bind:this={axisLeftRef} class="leftAxis" scale={scaleY} />
     <!-- bars -->
-    {#each [...edLevelCount] as [key, value]}
+    {#each [...chartData] as [key, value]}
       <rect
         x={1}
         y={scaleY(key) + 8 || 0}
-        width={scaleX(value) || 0}
+        width={scaleX(mean(value)) || 0}
         height={scaleY.bandwidth() - 16 || 0}
         fill="#f3daf5"
       />

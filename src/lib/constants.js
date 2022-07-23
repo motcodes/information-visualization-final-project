@@ -8,7 +8,8 @@ export const ages = [
   '45-54 years old',
   '55-64 years old',
   '65 years or older',
-  'Prefer not to say'
+  'Prefer not to say',
+  'NA'
 ]
 
 export const edLevels = [
@@ -19,6 +20,8 @@ export const edLevels = [
   'Master’s degree (M.A., M.S., M.Eng., MBA, etc.)',
   'Other doctoral degree (Ph.D., Ed.D., etc.)',
   'Associate degree (A.A., A.S., etc.)',
+  'Professional degree (JD, MD, etc.)',
+  'Something else',
   'NA'
 ]
 

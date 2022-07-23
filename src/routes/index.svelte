@@ -2,8 +2,9 @@
 <script>
   import { getTopoCountries } from '$lib/getTopoData'
   import AgeRowchart from '../charts/ageRowchart.svelte'
-  import CompensationRowchart from '../charts/salary.svelte'
   import EdLevelRowchart from '../charts/edLevelRowchart.svelte'
+  import SalaryAgeScatterplot from '../charts/salaryAgeRowchart.svelte'
+  import SalaryEdLevelRowchart from '../charts/salaryEdLevelRowchart.svelte'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
 </script>
@@ -20,7 +21,8 @@
     </svg>
     <Tooltip />
     <!-- Bar Charts -->
-    <CompensationRowchart {data} />
+    <SalaryEdLevelRowchart {data} />
+    <SalaryAgeScatterplot {data} />
     <AgeRowchart {data} />
     <EdLevelRowchart {data} />
   {:catch}

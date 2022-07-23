@@ -21,7 +21,7 @@
   const unsubscribe = activeCountry.subscribe((value) => {
     if (value.properties && value.isActive) {
       country = countryDevelopers.get(value.properties.name)
-      console.log(country)
+      // console.log(country)
       ageCount.clear()
       country.forEach((item) => {
         let ageValue = ageCount.get(item.Age) || 0
