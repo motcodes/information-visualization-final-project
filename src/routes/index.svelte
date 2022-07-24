@@ -19,9 +19,9 @@
     </svg>
     <Tooltip />
     <div class="info">
-      <p>cool text</p>
-      <p>cool text</p>
-      <p>cool text</p>
+      <h3>Stackoverflow 2021 Survey</h3>
+      <p>Zoom in/out, Pan around or click on the countries</p>
+      <small>by @motcodes</small>
     </div>
   {:catch}
     <div class="center">
@@ -45,6 +45,11 @@
   }
 
   .info {
+    --shadow-color: 286deg 36% 61%;
+    box-shadow: 0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.39),
+      0.7px 1.3px 1.5px -1.1px hsl(var(--shadow-color) / 0.35),
+      1.8px 3.6px 4.1px -2.2px hsl(var(--shadow-color) / 0.3),
+      4.6px 9.2px 10.4px -3.2px hsl(var(--shadow-color) / 0.26);
     position: fixed;
     bottom: 16px;
     left: 16px;

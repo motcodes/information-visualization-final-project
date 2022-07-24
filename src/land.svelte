@@ -5,7 +5,9 @@
 
   export let path
   export let feature
-  export let handleOnLand
+  export let developerPerCountry = new Map()
+
+  const isAvailable = [...developerPerCountry.keys()].find((key) => key === feature.properties.name)
 
   let country, element
   let isSameCountry = false
@@ -16,39 +18,37 @@
 
   // handleMouseEnter sets activeCountry to the current hovered feature (country) for the tooltip
   function handleMouseEnter(event) {
-    // console.log(activeCountry)
-    if (isSameCountry) {
+    if (isSameCountry && isAvailable) {
       activeCountry.setFeature(feature)
     }
   }
 
   // handleMouseMove updates activeCountry with the mouse x and y position so the tooltip follows the mouse when moving
   function handleMouseMove(event) {
-    if (isSameCountry) {
+    if (isSameCountry && isAvailable) {
       activeCountry.setPosition(event.x, event.y)
     }
   }
 
   // handleMouseLeave resets activeCountry to the inital value
   function handleMouseLeave(event) {
-    if (isSameCountry) {
+    if (isSameCountry && isAvailable) {
       activeCountry.reset()
     }
   }
 
   function handleClick(event) {
-    activeCountry.setFeature(feature)
-    activeCountry.toggleActive()
-    goto(`/${feature.properties.name}`)
-    // element.classList.toggle('active', isSameCountry)
-    // console.log(element.classList)
-    handleOnLand(event)
+    if (isAvailable) {
+      activeCountry.setFeature(feature)
+      activeCountry.toggleActive()
+      goto(`/${feature.properties.name}`)
+    }
   }
 </script>
 
 <!-- HTML Markup -->
 <path
-  class={`land`}
+  class={`land ${isAvailable ? 'available' : ''}`}
   d={path}
   data-value={feature.properties.name}
   bind:this={element}
@@ -56,19 +56,24 @@
   on:mouseenter={handleMouseEnter}
   on:mouseleave={handleMouseLeave}
   on:mousemove={handleMouseMove}
+  aria-disabled={!isAvailable}
 />
 
 <!-- Scoped Styles -->
 <style>
   .land {
-    fill: #f3daf5;
+    fill: #d1d1d1;
     stroke: #745676;
+    cursor: not-allowed;
+  }
+  .land.available {
+    fill: #f3daf5;
     cursor: pointer;
   }
-  .land:hover {
+  .land.available:hover {
     fill: #da9cde;
   }
-  .land.active {
+  .land.available.active {
     fill: #b876bd;
   }
 </style>

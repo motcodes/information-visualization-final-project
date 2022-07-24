@@ -1,16 +1,12 @@
-<!-- context script - only runs once on inital load -->
-<script context="module">
-</script>
-
 <!-- script -->
 <script>
   import { geoEquirectangular, geoPath, geoGraticule, zoom, select } from 'd3'
   import { onMount } from 'svelte'
   import Land from './land.svelte'
-  import { activeCountry } from '$lib/store'
 
   export let data
-  const { developerPerCountry, features, stackoverflow, bigData } = data
+  const { developerPerCountry, features, bigData, stackoverflow } = data
+  console.log(developerPerCountry)
 
   // geoEquirectangular is the type of map
   // path transforms arc values to svg values
@@ -26,10 +22,10 @@
   // onMount runs after the markup is rendered
   // once there is the svg and g element we can use them in the d3 context
   onMount(() => {
-    console.log(window.innerHeight)
-
     svg = select('svg#map')
     g = select('g.marks')
+    innerWidth = window.innerWidth
+    innerHeight = window.innerHeight
 
     projection = geoEquirectangular()
       .scale(1)
@@ -49,11 +45,6 @@
     // this function only runs inside the svg element
     svg.call(zoomFn)
   })
-
-  function handleOnLand(event) {
-    const countryName = event.target.dataset.value
-    console.log('devs per country: ', developerPerCountry.get(countryName) || 0)
-  }
 </script>
 
 <!-- HTML Markup -->
@@ -62,7 +53,7 @@
     <path class="sphere" d={path({ type: 'Sphere' })} />
     <path class="graticules" d={path(graticule())} />
     {#each features as feature}
-      <Land path={path(feature)} {feature} {handleOnLand} />
+      <Land path={path(feature)} {feature} {developerPerCountry} />
     {/each}
   {/if}
 </g>
