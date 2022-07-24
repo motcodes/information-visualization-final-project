@@ -1,6 +1,7 @@
 <!-- script -->
 <script>
   import { getTopoCountries } from '$lib/getTopoData'
+  import Info from '../info.svelte'
   import Marks from '../marks.svelte'
   import Tooltip from '../tooltip.svelte'
 </script>
@@ -18,16 +19,12 @@
       <Marks {data} />
     </svg>
     <Tooltip />
-    <div class="info">
-      <h3>Stackoverflow 2021 Survey</h3>
-      <p>Zoom in/out, Pan around or click on the countries</p>
-      <small>by @motcodes</small>
-    </div>
   {:catch}
     <div class="center">
       <p>error while loading map</p>
     </div>
   {/await}
+  <Info />
 </main>
 
 <style>
@@ -42,22 +39,5 @@
     justify-content: center;
     align-items: center;
     font-size: 32px;
-  }
-
-  .info {
-    --shadow-color: 286deg 36% 61%;
-    box-shadow: 0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.39),
-      0.7px 1.3px 1.5px -1.1px hsl(var(--shadow-color) / 0.35),
-      1.8px 3.6px 4.1px -2.2px hsl(var(--shadow-color) / 0.3),
-      4.6px 9.2px 10.4px -3.2px hsl(var(--shadow-color) / 0.26);
-    position: fixed;
-    bottom: 16px;
-    left: 16px;
-    padding: 0.5rem 1rem;
-    max-width: 256px;
-    width: 100%;
-    border: 1px solid #745676;
-    border-radius: 4px;
-    background-color: #fef9fe;
   }
 </style>

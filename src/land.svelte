@@ -62,7 +62,7 @@
 <!-- Scoped Styles -->
 <style>
   .land {
-    fill: #d1d1d1;
+    fill: #b4a3bc;
     stroke: #745676;
     cursor: not-allowed;
   }

@@ -27,6 +27,7 @@
     background: #f3daf5;
     border-radius: 4px;
     transform: translateY(50%);
+    box-shadow: var(--shadow-elevation-low);
   }
   .tooltip p {
     margin: 0;

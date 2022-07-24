@@ -5,8 +5,7 @@
   import Land from './land.svelte'
 
   export let data
-  const { developerPerCountry, features, bigData, stackoverflow } = data
-  console.log(developerPerCountry)
+  const { developerPerCountry, features, bigData } = data
 
   // geoEquirectangular is the type of map
   // path transforms arc values to svg values
