@@ -23,9 +23,13 @@
       -0.1px 38.3px 51.1px -0.9px hsl(var(--shadow-color) / 0.42),
       -0.2px 54.4px 72.6px -1.1px hsl(var(--shadow-color) / 0.47);
   }
+
+  html {
+    font-family: 'Zodiak', 'Helvetica', serif;
+    font-weight: 420;
+  }
   body {
     margin: 0 0rem;
-    font-family: 'Helvetica', sans-serif;
     background: #fcfcfc;
   }
   main {
@@ -37,5 +41,15 @@
 
   .tick text {
     font-size: 12.8px;
+    font-family: 'Zodiak', 'Helvetica', serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin-top: 0;
+    font-weight: 500;
   }
 </style>

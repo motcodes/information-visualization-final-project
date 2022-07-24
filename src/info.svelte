@@ -11,7 +11,7 @@
     bottom: 16px;
     left: 16px;
     padding: 0.5rem 1rem;
-    max-width: 256px;
+    max-width: 272px;
     width: 100%;
     border: 1px solid #745676;
     border-radius: 4px;

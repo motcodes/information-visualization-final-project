@@ -25,9 +25,9 @@ export const edLevels = [
   'NA'
 ]
 
-export const margin = { top: 10, right: 20, bottom: 30, left: 250 }
-export const width = 800 - margin.left - margin.right
-export const height = 500 - margin.top - margin.bottom
+export const margin = { top: 16, right: 24, bottom: 32, left: 196 }
+export const width = 992 - margin.left - margin.right
+export const height = 600 - margin.top - margin.bottom
 
 export const countOccur = (dataset, key, searchValue) =>
   dataset.reduce((n, value) => {

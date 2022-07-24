@@ -46,11 +46,8 @@
         y={scaleY(key) + 8 || 0}
         width={scaleX(mean(value)) || 0}
         height={scaleY.bandwidth() - 16 || 0}
-        fill="#f3daf5"
+        fill="#e6b0eb"
       />
     {/each}
   </RowchartWrapper>
 {/key}
-
-<style>
-</style>

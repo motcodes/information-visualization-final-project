@@ -13,9 +13,3 @@
     </g>
   </svg>
 </div>
-
-<style>
-  .modal {
-    margin-left: 16px;
-  }
-</style>

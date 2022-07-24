@@ -51,9 +51,41 @@
   })
 </script>
 
-<div>
-  <AgeRowchart {ageData} {country} />
-  <EdLevelRowchart {edLevelData} {country} />
-  <SalaryAgeRowchart {salaryAgeData} {country} {maxSalary} />
-  <SalaryEdLevelRowchart {salaryEdLevelData} {country} {maxSalary} />
+<div class="container">
+  <div class="wrapper">
+    <h2>Developer Ages in {countryName}</h2>
+    <AgeRowchart {ageData} {country} />
+  </div>
+  <div class="wrapper">
+    <h2>Developer Education Levels in {countryName}</h2>
+    <EdLevelRowchart {edLevelData} {country} />
+  </div>
+
+  <div class="wrapper">
+    <h2>Developers Mean Salaries over their Age in {countryName}</h2>
+    <SalaryAgeRowchart {salaryAgeData} {country} {maxSalary} />
+  </div>
+  <div class="wrapper">
+    <h2>Developers Mean Salaries over their Education Level in {countryName}</h2>
+    <SalaryEdLevelRowchart {salaryEdLevelData} {country} {maxSalary} />
+  </div>
 </div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .wrapper {
+    padding: 1rem;
+    background-color: #f6f6f6;
+    border: 1.5px solid #dbdbdb;
+    border-radius: 6px;
+  }
+  h2 {
+    margin-top: 1rem;
+    text-align: center;
+  }
+</style>
