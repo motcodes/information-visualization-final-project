@@ -1,3 +1,4 @@
+<!-- A div center component -->
 <div class="center">
   <slot>
     <p>Loading Data</p>

@@ -7,17 +7,15 @@
   export let feature
   export let developerPerCountry = new Map()
 
+  // checks if country is in the stackoverflow dataset
   const isAvailable = [...developerPerCountry.keys()].find((key) => key === feature.properties.name)
-
-  let country, element
   let isSameCountry = false
   const unsubscribe = activeCountry.subscribe((value) => {
-    country = value
     isSameCountry = !value.isActive
   })
 
   // handleMouseEnter sets activeCountry to the current hovered feature (country) for the tooltip
-  function handleMouseEnter(event) {
+  function handleMouseEnter() {
     if (isSameCountry && isAvailable) {
       activeCountry.setFeature(feature)
     }
@@ -31,13 +29,14 @@
   }
 
   // handleMouseLeave resets activeCountry to the inital value
-  function handleMouseLeave(event) {
+  function handleMouseLeave() {
     if (isSameCountry && isAvailable) {
       activeCountry.reset()
     }
   }
 
-  function handleClick(event) {
+  // redirects to the clicked country page if it is available
+  function handleClick() {
     if (isAvailable) {
       activeCountry.setFeature(feature)
       activeCountry.toggleActive()
@@ -47,11 +46,11 @@
 </script>
 
 <!-- HTML Markup -->
+<!-- only countries with entries from stackoverflow are clickable -->
 <path
   class={`land ${isAvailable ? 'available' : ''}`}
   d={path}
   data-value={feature.properties.name}
-  bind:this={element}
   on:click={handleClick}
   on:mouseenter={handleMouseEnter}
   on:mouseleave={handleMouseLeave}

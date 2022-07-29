@@ -23,8 +23,6 @@
   onMount(() => {
     svg = select('svg#map')
     g = select('g.marks')
-    innerWidth = window.innerWidth
-    innerHeight = window.innerHeight
 
     projection = geoEquirectangular()
       .scale(1)

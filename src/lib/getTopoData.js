@@ -23,7 +23,7 @@ const changeCountryNames = (item) => {
 }
 
 export const getTopoCountries = async () => {
-  // fetches world geoJson data and world population
+  // fetches world geoJson data and stackoverflow data
   const res = await Promise.all([
     json(
       'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',
@@ -35,9 +35,6 @@ export const getTopoCountries = async () => {
   let developerPerCountry = new Map()
   let countryDevelopers = new Map()
 
-  // **************
-  // add global data
-  // **************
   let features = await res[0].features
   let stackoverflow = await res[1].map((item) => {
     const newItem = changeCountryNames(item)

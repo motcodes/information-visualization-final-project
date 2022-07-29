@@ -23,34 +23,45 @@
   // inside the loop the ageData, edLevelData, salaryAgeData and salaryEdLevelData for the barcharts is set,
   // which updates each time another country is clicked on
   onMount(() => {
-    country = countryDevelopers.get(countryName)
-    console.log(country)
+    // reset maps
     ageData.clear()
     edLevelData.clear()
     salaryAgeData.clear()
 
+    // get active country from url
+    country = countryDevelopers.get(countryName)
+
     country.forEach((item) => {
+      // counting age values
       let ageValue = ageData.get(item.Age) || 0
       ageValue += 1
       ageData.set(item.Age, ageValue)
 
+      // counting ed level values
       let edLevelValue = edLevelData.get(item.EdLevel) || 0
       edLevelValue += 1
       edLevelData.set(item.EdLevel, edLevelValue)
 
-      let salary = Number.isNaN(parseInt(item.CompTotal)) ? 0 : parseInt(item.CompTotal)
+      // parsing the salary corretly
+      let salary = Number.isNaN(parseInt(item.ConvertedCompYearly))
+        ? 0
+        : parseInt(item.ConvertedCompYearly)
       if (salary > 1) {
+        // mapping the salary over the age data
         let salaryAgeValue = salaryAgeData.get(item.Age) || []
         salaryAgeData.set(item.Age, [...salaryAgeValue, salary])
 
+        // mapping the salary over the ed level data
         let salaryEdLevelValue = salaryEdLevelData.get(item.EdLevel) || []
         salaryEdLevelData.set(item.EdLevel, [...salaryEdLevelValue, salary])
       }
     })
+    // calculating the max mean salary of this country
     maxSalary = Math.max(...[...salaryAgeData.values()].map((item) => mean(item)))
   })
 </script>
 
+<!-- HTML Markup -->
 <div class="container">
   <div class="wrapper">
     <h2>Developer Ages in {countryName}</h2>
@@ -71,6 +82,7 @@
   </div>
 </div>
 
+<!-- Scoped Styles -->
 <style>
   .container {
     display: flex;

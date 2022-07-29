@@ -1,3 +1,4 @@
+<!-- Bottom Left Info Panel on the homescreen  -->
 <div class="info">
   <h3>Stackoverflow 2021 Survey</h3>
   <p>Zoom in/out, Pan around or click on the countries</p>

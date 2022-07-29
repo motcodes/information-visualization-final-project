@@ -29,6 +29,7 @@
   }
 </script>
 
+<!-- #key listens to changes of country and rerenders when it updates -->
 {#key country}
   <RowchartWrapper>
     <!-- bottom axis -->
